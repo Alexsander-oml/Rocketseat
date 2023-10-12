@@ -34,12 +34,18 @@ public class UserController {
    * body
    */
   @PostMapping("/")
-  // public void create(@RequestBody UserModel UserModel) {
-    public UserModel create(@RequestBody UserModel UserModel) {
-    
-    // System.out.println(UserModel.getUsername());
-    
-    this.userRepository.save(UserModel);
+  // public void create(@RequestBody UserModel UserModel) { //
+  // System.out.println(UserModel.getUsername());
+  
+  public UserModel create(@RequestBody UserModel UserModel) {
+
+    var user = this.userRepository.findByUsername(UserModel.getUsername());
+
+    if(user != null){
+        System.out.println("Usuário já existe");
+        return null;
+    }
+
     var userCreated = this.userRepository.save(UserModel);
     return userCreated;
   }
